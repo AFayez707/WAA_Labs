@@ -4,7 +4,8 @@ import edu.miu.restful.entity.Product;
 import edu.miu.restful.entity.Review;
 import edu.miu.restful.entity.dto.ProductDetailDto;
 import edu.miu.restful.entity.dto.ProductDto;
-import org.springframework.web.bind.annotation.RequestBody;
+import edu.miu.restful.entity.dto.ProductDetailDto;
+import edu.miu.restful.entity.dto.ProductDto;
 
 import java.util.List;
 

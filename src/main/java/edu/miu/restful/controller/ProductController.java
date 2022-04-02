@@ -1,10 +1,10 @@
 package edu.miu.restful.controller;
 
-import edu.miu.restful.entity.Product;
 import edu.miu.restful.entity.Review;
 import edu.miu.restful.entity.dto.ProductDetailDto;
 import edu.miu.restful.entity.dto.ProductDto;
 import edu.miu.restful.service.ProductService;
+import edu.miu.restful.entity.dto.ProductDetailDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -32,6 +32,7 @@ public class ProductController {
     public List<ProductDto> getAll() {
         return productService.findAll();
     }
+
 //    @ResponseStatus(HttpStatus.OK)
 //    @GetMapping
 //    public List<ProductDto> getAll(@RequestParam(value = "filter" ,required = false) Integer price) {

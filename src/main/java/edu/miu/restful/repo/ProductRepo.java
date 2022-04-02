@@ -3,6 +3,8 @@ package edu.miu.restful.repo;
 import edu.miu.restful.entity.Product;
 import edu.miu.restful.entity.Review;
 import edu.miu.restful.entity.dto.ProductDto;
+import edu.miu.restful.entity.Product;
+import edu.miu.restful.entity.Review;
 
 import java.util.List;
 
