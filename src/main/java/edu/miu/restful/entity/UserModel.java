@@ -1,5 +1,6 @@
 package edu.miu.restful.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,16 @@ public class UserModel {
 
     String name;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     List<Post> posts;
+
+    @OneToMany(mappedBy = "principle", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    List<Logger> log;
+
+    public static UserModel getLoggedInUser(){
+        return new UserModel(101,"LoggedIn User!",null,null);
+    }
 }
