@@ -1,5 +1,6 @@
 package edu.miu.restful.controller;
 
+import edu.miu.restful.entity.dto.CommentDto;
 import edu.miu.restful.entity.dto.PostDto;
 import edu.miu.restful.entity.dto.UserDto;
 import edu.miu.restful.service.UserService;
@@ -18,8 +19,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping()
-    public List<UserDto> getUsers() {
+    @GetMapping
+    public List<UserDto> getAllUsers() {
         return userService.findAll();
     }
 
@@ -36,8 +37,8 @@ public class UserController {
 
     @GetMapping("/{id}/posts")
     public ResponseEntity<List<PostDto>> gePostsByUserId(@PathVariable long id) {
-        var user = userService.getPostsByUserId(id);
-        return ResponseEntity.ok(user);
+        var posts = userService.getPostsByUserId(id);
+        return ResponseEntity.ok(posts);
     }
 
     @DeleteMapping("/{id}")
@@ -48,6 +49,18 @@ public class UserController {
     @PutMapping("/{id}")
     public void update(@PathVariable("id") int postId, @RequestBody UserDto userDto) {
         userService.update(postId, userDto);
+    }
+
+    @GetMapping("/{id}/posts/{postId}")
+    public ResponseEntity<List<CommentDto>> getCommentsByUserIdAndPostId(@PathVariable int userId, @PathVariable int postId) {
+        var comments = userService.getCommentsByUserIdAndPostId(userId, postId);
+        return ResponseEntity.ok(comments);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<UserDto>> getUsersWithPostsMoreThan(@RequestParam(value = "numOfPosts", required = false) int numOfPosts) {
+        var users = userService.getUsersWithPostsMoreThan(numOfPosts);
+        return ResponseEntity.ok(users);
     }
 
 }

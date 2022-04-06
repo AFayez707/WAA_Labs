@@ -1,7 +1,9 @@
 package edu.miu.restful.service.impl;
 
+import edu.miu.restful.entity.Comment;
 import edu.miu.restful.entity.Post;
 import edu.miu.restful.entity.UserModel;
+import edu.miu.restful.entity.dto.CommentDto;
 import edu.miu.restful.entity.dto.PostDto;
 import edu.miu.restful.entity.dto.UserDto;
 import edu.miu.restful.helper.ListMapper;
@@ -27,6 +29,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     ListMapper<Post, PostDto> listMapperPostToDto;
+
+    @Autowired
+    ListMapper<Comment, CommentDto> listMapperCommentToDto;
 
     @Override
     public List<UserDto> findAll() {
@@ -57,5 +62,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<PostDto> getPostsByUserId(long id) {
         return (List<PostDto>) listMapperPostToDto.mapList(userRepo.findById(id).get().getPosts(), new PostDto());
+    }
+
+    @Override
+    public List<CommentDto> getCommentsByUserIdAndPostId(long userId, long postId) {
+        var comments = userRepo.findById(userId)
+                .get()
+                .getPosts()
+                .stream()
+                .filter(p -> p.getId() == postId)
+                .findAny()
+                .orElse(null)
+                .getComments();
+
+        return (List<CommentDto>) listMapperCommentToDto.mapList(comments, new CommentDto());
+    }
+
+    @Override
+    public List<UserDto> getUsersWithPostsMoreThan(int numOfPosts) {
+        var users = userRepo.getUsersWithPostsMoreThan(numOfPosts);
+        return (List<UserDto>) listMapperUserToDto.mapList(users, new UserDto());
     }
 }

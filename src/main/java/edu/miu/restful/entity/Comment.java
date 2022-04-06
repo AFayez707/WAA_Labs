@@ -5,22 +5,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Post {
+public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    String title;
-    String content;
-    String author;
+    String text;
 
-
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    List<Comment> comments;
+    @ManyToOne
+    Post post;
 }

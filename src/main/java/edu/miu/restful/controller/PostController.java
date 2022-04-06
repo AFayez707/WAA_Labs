@@ -1,5 +1,6 @@
 package edu.miu.restful.controller;
 
+import edu.miu.restful.entity.dto.CommentDto;
 import edu.miu.restful.entity.dto.PostDto;
 import edu.miu.restful.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,8 @@ import java.util.List;
 @CrossOrigin(origins = {"http://localhost:3000"})
 public class PostController {
 
-    private final PostService postService;
-
     @Autowired
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
+    PostService postService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(headers = "X-API-VERSION=1")
@@ -33,10 +30,16 @@ public class PostController {
 //        return postService.findAllPosts();
 //    }
 
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping(headers = "X-API-VERSION=2")
+//    public List<PostDto> getAll(@RequestParam(value = "filter" ,required = false) String authorName) {
+//        return authorName==null?postService.findAllPosts():postService.findAllPostsByAuthorName(authorName);
+//    }
+
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(headers = "X-API-VERSION=2")
-    public List<PostDto> getAll(@RequestParam(value = "filter" ,required = false) String authorName) {
-        return authorName==null?postService.findAllPosts():postService.findAllPostsByAuthorName(authorName);
+    @GetMapping(headers = "X-API-VERSION=3")
+    public List<PostDto> getAllWithTitle(@RequestParam(value = "title" ,required = false) String title) {
+        return title==null?postService.findAllPosts():postService.findAllPostsByTitle(title);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -61,6 +64,11 @@ public class PostController {
     @PutMapping("/{id}")
     public void updatePost(@PathVariable int id, @RequestBody PostDto p) {
         postService.updatePost(id, p);
+    }
+
+    @PostMapping("/{id}/comment")
+    public void addComment(@PathVariable("id") long postId, @RequestBody CommentDto commentDto) {
+        postService.addComment(postId, commentDto);
     }
 
 

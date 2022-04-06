@@ -1,21 +1,27 @@
 package edu.miu.restful.service;
 
 import edu.miu.restful.entity.Post;
+import edu.miu.restful.entity.dto.CommentDto;
 import edu.miu.restful.entity.dto.PostDto;
 import edu.miu.restful.entity.dto.PostDto;
 
 import java.util.List;
 
 public interface PostService {
-    public List<PostDto> findAllPosts();
+    List<PostDto> findAllPosts();
 
-    public List<PostDto> findAllPostsByAuthorName(String authorName);
+//    List<PostDto> findAllPostsByAuthorName(String authorName);
 
-    public PostDto getPostById(int id);
+    List<PostDto> findAllPostsByTitle(String title);
 
-    public void savePost(PostDto p);
+    PostDto getPostById(int id);
 
-    public void deletePost(int id);
+    void savePost(PostDto p);
 
-    public void updatePost(int id, PostDto p);
+    void deletePost(int id);
+
+    void updatePost(int id, PostDto p);
+
+    void addComment(long postId, CommentDto cDto);
+
 }
